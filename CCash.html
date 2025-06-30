@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ATM System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url("https://i.vimeocdn.com/video/852706743-1fd60d8df2fcf1a00f35388223416fb8ed436ed25c1d5833b668c6fbcb8b9a85-d?f=webp");
+      background-color: #f0f0f5;
+      background-repeat: no-repeat no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      padding-top: 80px;
+      color: #101217;
+    }
+
+    .atm-container {
+      background: #fff;
+      padding: 25px 35px;
+      border-radius: 10px;
+      box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .title {
+        color: #002DB2;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+
+    .buttons button {
+      margin: 5px;
+      padding: 10px;
+      width: 90px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    button {
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #4e76ee;
+        transition: 0.2s;
+    }
+
+    .btn-cashin {
+        background-color: #002DB2;
+    }
+
+    .btn-cashout {
+        background-color: #879fe7;
+        color: #101217;
+    }
+  </style>
+</head>
+<body>
+  <div class="atm-container">
+    <h1 class = "title">CCash</h1>
+    <p id="balance">Balance: ₱0.00</p>
+
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <div class="buttons">
+      <button onclick="deposit()" class = "btn-cashin">Cash In</button>
+      <button onclick="withdraw()" class = "btn-cashout">Cash Out</button>
+    </div>
+
+    <div id="message"></div>
+  </div>
+  <script>
+    let balance = 0;
+
+    function checkBalance() {
+      document.getElementById("message").innerText = `Your current balance is ₱${balance.toFixed(2)}`;
+    }
+
+    function deposit() {
+      let amount = getAmount();
+      if (amount <= 0 || isNaN(amount)) {
+        showMessage("Please enter a valid deposit amount.");
+        return;
+      }
+      balance += amount;
+      showMessage(`Deposited ₱${amount.toFixed(2)} successfully.`);
+      updateBalance();
+    }
+
+    function withdraw() {
+      let amount = getAmount();
+      if (amount <= 0 || isNaN(amount)) {
+        showMessage("Please enter a valid withdrawal amount.");
+        return;
+      }
+
+      if (amount > balance) {
+        showMessage("Insufficient funds.");
+      } else {
+        balance -= amount;
+        showMessage(`Withdrawn ₱${amount.toFixed(2)} successfully.`);
+        updateBalance();
+      }
+    }
+
+    function getAmount() {
+      let input = document.getElementById("amount").value;
+      return parseFloat(input);
+    }
+
+    function updateBalance() {
+      document.getElementById("balance").innerText = `Balance: ₱${balance.toFixed(2)}`;
+    }
+
+    function showMessage(msg) {
+      document.getElementById("message").innerText = msg;
+    }
+  </script>
+</body>
+</html>
