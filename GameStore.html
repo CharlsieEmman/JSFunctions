@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GameStore</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #27002f;
+      display: flex;
+      justify-content: center;
+      padding-top: 80px;
+      color: #27002f;
+    }
+
+    .atm-container {
+      background: #fbf2fe;
+      padding: 25px 35px;
+      border-radius: 10px;
+      box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+
+    .buttons button {
+      margin: 5px;
+      padding: 10px;
+      width: 90px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    button {
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #27002f;
+        color: #fbf2fe;
+        transition: 0.2s;
+    }
+
+    .btn-topup {
+        background-color: #b984c4;
+        color: #27002f;
+    }
+
+    #game {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .rate {
+        margin: auto;
+    }
+
+    .rate tr:nth-child(even) {
+        background-color: #e8d8eb;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="atm-container">
+    <h1 class = "title">GameStore</h1>
+    <h3>Exhange Rates</h3>
+    <table class="rate">
+        <tr>
+            <th>Game</th>
+            <th>₱1 = GP</th>
+        </tr>
+        <tr>
+            <td>Valorant</td>
+            <td>3 GP</td>
+        </tr>
+        <tr>
+            <td>League of Legends</td>
+            <td>2 GP</td>
+        </tr>
+        <tr>
+            <td>Teamfight Tactics</td>
+            <td>5 GP</td>
+        </tr>
+        <tr>
+            <td>Roblox</td>
+            <td>7 GP</td>
+        </tr>
+    </table>
+
+   <div class="topup-section">
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" placeholder="Amount">
+
+        <label for="game">Exchange Rate:</label>
+        <select id="game" placeholder="Exchange rate">
+            <option value="3">Valorant</option>
+            <option value="2">League of Legends</option>
+            <option value="5">Teamfight Tactics</option>
+            <option value="7">Roblox</option>
+        </select>
+
+        <div class="buttons">
+            <button onclick="topup()" class="btn-topup">Top Up</button>
+        </div>
+
+        <p id="balance">Balance: GP 0.00</p>
+        <p id="message"></p>
+    </div>
+  </div>
+  <script>
+    let balance = 0;
+    let exchange = 0;
+
+    function getExchange(){
+        let input = document.getElementById("game").value;
+        return parseFloat(input);
+    }
+
+    function topup() {
+      let amount = getAmount() * getExchange();
+      if (amount <= 0 || isNaN(amount)) {
+        showMessage("Please enter a valid top up amount.");
+        return;
+      }
+      balance += amount;
+      showMessage(`Topped up GP ${amount.toFixed(2)} successfully.`);
+      updateBalance();
+    }
+
+    function getAmount() {
+      let input = document.getElementById("amount").value;
+      return parseFloat(input);
+    }
+
+    function updateBalance() {
+      document.getElementById("balance").innerText = `Balance: GP ${balance.toFixed(2)}`;
+    }
+
+    function showMessage(msg) {
+      document.getElementById("message").innerText = msg;
+    }
+  </script>
+</body>
+</html>
